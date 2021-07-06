@@ -1,0 +1,116 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .wrapper {
+            display: flex;
+            flex-flow: row wrap;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .wrapper>* {
+            padding: 10px;
+            flex: 1 100%;
+        }
+
+        .header {
+            background: deepskyblue;
+        }
+
+        .footer {
+            background: deepskyblue;
+        }
+
+        .main {
+            text-align: left;
+            background: #FFFAFA;
+        }
+
+
+
+        @media all and (min-width: 800px) {
+            .main {
+                flex: 3 0px;
+            }
+
+            .main {
+                order: 1;
+            }
+
+            .footer {
+                order: 2;
+            }
+        }
+
+        body {
+            padding: 2em;
+        }
+    </style>
+
+</head>
+
+<div class="wrapper">
+    <header class="header">HOSPITAL MANAGEMENT SYSTEM</header>
+    <article class="main">
+        <h1>Hospital List</h1><br />
+        <button class="btn btn-sm text-white btn-success">
+            Sort by Hospital Name
+        </button><br />
+        <table class="table">
+            <thead>
+                <th>Department Name</th>
+                <th>Contact Number</th>
+                <th>View Department</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let hospital of hospitals; let i = index">
+
+                    <td *ngIf="Edit; then templateName else othertemplateName ">
+
+                    </td>
+
+                    <ng-template #templateName>
+                        <td> <input type="text" name="hospitalname" /></td>
+                        <td> <input type="text" name="contactnumber" /></td>
+                        <button type="button" class="btn btn-sm text-white btn-success">View</button>&nbsp;
+                        <button type="button" class="btn btn-sm text-white btn-success"
+                            (click)="updateHospital()">Save</button> &nbsp;
+                        <button type="button" class="btn btn-sm text-white btn-danger">Delete</button>
+                    </ng-template>
+                    <ng-template #othertemplateName>
+                        <td>{{hospital.hospitalname}}</td>
+                        <td>{{hospital.contactnumber}}</td>
+                        <button type="button" class="btn btn-sm text-white btn-success"
+                            routerLink="/departmentview/{{hospital.hospitalname}}">View</button>&nbsp;
+                        <button type="button" class="btn btn-sm text-white btn-success"
+                            (click)="updateHospital()">Edit</button> &nbsp;
+                        <button type="button" class="btn btn-sm text-white btn-danger">Delete</button>
+                    </ng-template>
+                </tr>
+                <hr />
+
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="form-group col-xs-4">
+                <input class="form-control" type="text" name="hospitalname" id="hospitalname" required
+                    [(ngModel)]="hospital.hospitalname" />
+            </div>
+            <div class="form-group col-xs-4"><input class="form-control" type="text" id="contactnumber" required
+                    name="contactnumber" [(ngModel)]="hospital.contactnumber" /></div>
+            <div class="form-group col-xs-4"> <button type="button" class="btn btn-sm text-white btn-success"
+                    (click)="saveHospital()">Add</button>&nbsp;<button type="button"
+                    class="btn btn-sm text-white btn-success">Reset</button> </div>
+        </div>
+    </article>
+
+    <footer class="footer">Copyright &copy; 2018 Hospital</footer>
+</div>
+
+</html>
